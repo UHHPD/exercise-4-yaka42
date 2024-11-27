@@ -15,6 +15,20 @@ class Data {
   double binLow(int i) const { return *min_element(m_bins.begin(), m_bins.end()); }
   double binHigh(int i) const { return *max_element(m_bins.begin(), m_bins.end()); }
   double error(int i) const { return m_error[i]; }
+  int checkCompatibility( const Data& in , int n ){    
+      int zaehler = 0;
+      for(int i = 0; i < 56; i++){
+        if(in.measurement(i) - measurement(i) > n * sqrt(pow(error(27), 2) +  pow(in.error(27), 2))){
+          zaehler++;
+        }
+        if (in.measurement(i) - measurement(i) < -n * sqrt(pow(error(27), 2) +  pow(in.error(27), 2))){
+          zaehler++;
+        }
+      }
+      return zaehler;
+}
+
+  
 
  private:
   Data() {}  // disallow empty data set
@@ -22,6 +36,9 @@ class Data {
   std::vector<double> m_data;
   std::vector<double> m_bins;
   std::vector<double> m_error;
+  
 };
+
+
 
 #endif
