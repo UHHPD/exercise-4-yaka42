@@ -60,6 +60,20 @@ void runTests() {
     std::cout << (test() ? " ok" : " FAILED!") << std::endl;
 }
 
+Data gleichmacher(const Data& A, const Data& B){
+  // Kompatibilität checken:
+  if (B.checkCompatibility(A, 3)> 10){
+    return A;
+  }
+  double error;
+  double y; 
+  for(int i = 0; i < 56; i++){
+    y = (1/pow(A.error(i), 2)*A.measurement(i) + 1/pow(B.error(i), 2)*B.measurement(i))/(1/pow(A.error(i), 2) + 1/pow(B.error(i), 2));
+    error = sqrt(1/(1/pow(A.error(i), 2) + 1/pow(B.error(i), 2)));
+  }
+
+}
+
 int main() {
   using namespace std;
 
@@ -68,11 +82,24 @@ int main() {
   cout << "******************************************************" << endl;
   // create an object which holds data of experiment A
   Data datA("exp_A");
+  Data datB("exp_B");
+  Data datC("exp_C");
+  Data datD("exp_D");
+
+  std::vector<Data> Datensets = {datA,datB,datC,datD};
 
   // here is the data from experiment A
   cout << "bin 27: from " << datA.binLow(27) << " to " << datA.binHigh(27)
        << endl;
-  cout << "measurement of experiment A in bin 27: " << datA.measurement(27)
+  for(int i = 0; i < 4; i++){
+      cout << "experiment " << i << ", value in bin 27: " << Datensets[i].measurement(27)<< endl;
+  }
+  // exercise 1d)
+  cout << "experiment A - experiment B in bin 27: " << datA.measurement(27) - datB.measurement(27)
+       << endl;
+  cout << "error of experiment A and B: " << sqrt(pow(datA.error(27), 2) +  pow(datB.error(27), 2))
+       << endl;
+  cout << "test of function checkCompatibility: " << datA.checkCompatibility(datB, 1)
        << endl;
 
   return 0;
