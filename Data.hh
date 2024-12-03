@@ -3,7 +3,9 @@
 
 #include <vector>
 #include <string>
-#include <bits/stdc++.h>
+//#include <bits/stdc++.h>
+#include <algorithm>
+#include <iostream>
 
 class Data {
  public:
@@ -15,7 +17,7 @@ class Data {
   double binLow(int i) const { return *min_element(m_bins.begin(), m_bins.end()); }
   double binHigh(int i) const { return *max_element(m_bins.begin(), m_bins.end()); }
   double error(int i) const { return m_error[i]; }
-  int checkCompatibility( const Data& in , int n ){    
+  int checkCompatibility( const Data& in , int n ) const {    
       int zaehler = 0;
       for(int i = 0; i < 56; i++){
         if(in.measurement(i) - measurement(i) > n * sqrt(pow(error(27), 2) +  pow(in.error(27), 2))){
