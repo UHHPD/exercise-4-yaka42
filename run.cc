@@ -2,7 +2,7 @@
 #include <vector>
 #include <functional>
 #include <string>
-
+#include <cmath>
 #include "Data.hh"
 
 // generic function comparing two values of some type T used later for int and
@@ -60,19 +60,6 @@ void runTests() {
     std::cout << (test() ? " ok" : " FAILED!") << std::endl;
 }
 
-Data gleichmacher(const Data& A, const Data& B){
-  // Kompatibilität checken:
-  if (B.checkCompatibility(A, 3)> 10){
-    return A;
-  }
-  double error;
-  double y; 
-  for(int i = 0; i < 56; i++){
-    y = (1/pow(A.error(i), 2)*A.measurement(i) + 1/pow(B.error(i), 2)*B.measurement(i))/(1/pow(A.error(i), 2) + 1/pow(B.error(i), 2));
-    error = sqrt(1/(1/pow(A.error(i), 2) + 1/pow(B.error(i), 2)));
-  }
-
-}
 
 int main() {
   using namespace std;
@@ -85,7 +72,6 @@ int main() {
   Data datB("exp_B");
   Data datC("exp_C");
   Data datD("exp_D");
-
   std::vector<Data> Datensets = {datA,datB,datC,datD};
 
   // here is the data from experiment A
@@ -101,6 +87,13 @@ int main() {
        << endl;
   cout << "test of function checkCompatibility: " << datA.checkCompatibility(datB, 1)
        << endl;
+
+  //datA.plus(datB);
+
+  //Chi2
+  for(int i = 0; i < 4; i++){
+    cout << Datensets[i].rechi2() << endl;
+  }
 
   return 0;
 }
