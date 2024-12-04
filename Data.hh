@@ -14,13 +14,7 @@ class Data {
 
   unsigned int size() const { return m_data.size(); }
   double measurement(int i) const { return m_data[i]; }
-  double binCenter(int i) const { 
-    if (i == 0){
-      return m_bins[i]/2;
-    }
-    else{return (m_bins[i]-m_bins[i-1])/2;
-    }
-  }
+  double binCenter(int i) const { return m_bins[i] + (m_bins[i+1]-m_bins[i])/2; }
   double binLow(int i) const { return *min_element(m_bins.begin(), m_bins.end()); }
   double binHigh(int i) const { return *max_element(m_bins.begin(), m_bins.end()); }
   double error(int i) const { return m_error[i]; }
@@ -37,8 +31,14 @@ class Data {
       }
       return zaehler;
   }
-  double prediction(int i) const {return 0.005 - 0.00001 * binCenter(i) - 0.08*exp(-0.015 * binCenter(i)); }
-  double rechi2() const {return chi2; }
+  double prediction(int i) const {return 0.005 - 0.00001 * binCenter(i) + 0.08*exp(-0.015 * binCenter(i)); }
+  double rechi2() const { 
+    double chi2 = 0.0;
+    for (int i = 0; i < 56; ++i) {
+    chi2 +=  pow(measurement(i) - prediction(i),2)/pow(error(i),2);
+    }
+    return chi2/56;
+  }
 
 
 
@@ -55,9 +55,6 @@ class Data {
     m_data.push_back(y);
     m_error.push_back(new_error);
   }
-  for (int i = 0; i < 56; ++i) {
-    chi2 +=  pow(measurement(i) - prediction(binCenter(i)),2)/pow(error(i),2);
-  }
   }
 
  private:
@@ -66,7 +63,6 @@ class Data {
   std::vector<double> m_data;
   std::vector<double> m_bins;
   std::vector<double> m_error;
-  double chi2 = 0;  
 };
 
 

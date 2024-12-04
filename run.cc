@@ -95,5 +95,13 @@ int main() {
     cout << Datensets[i].rechi2() << endl;
   }
 
+  for(int i = 0; i < 56; i++){
+    cout << datA.rechi2()/56 << endl;
+    cout << datA.binCenter(i) << endl;
+    cout << datA.prediction(i) << endl;
+    cout << datA.measurement(i) << endl;
+    cout << datA.error(i) << endl;
+  }
+
   return 0;
 }

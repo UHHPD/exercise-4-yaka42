@@ -10,7 +10,6 @@ using namespace std;
 
 Data::Data(const std::string& filename) {
   ifstream file(filename);
-
   // check if file opened correctly
   if (!file.is_open()) {
     throw std::runtime_error("Error could not open file with name: " +
@@ -37,11 +36,6 @@ Data::Data(const std::string& filename) {
     double errors;
     file >> errors;
     m_error.push_back(errors);
-  }
-
-  // chi2 berechnen
-  for (int i = 0; i < size; ++i) {
-    chi2 +=  pow(measurement(i) - prediction(binCenter(i)),2)/pow(error(i),2);
   }
 
   // done! close the file
