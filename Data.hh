@@ -6,6 +6,7 @@
 //#include <bits/stdc++.h>
 #include <algorithm>
 #include <iostream>
+#include <cmath>
 
 class Data {
  public:
