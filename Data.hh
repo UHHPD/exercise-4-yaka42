@@ -1,6 +1,7 @@
 #ifndef DATA_HH
 #define DATA_HH
-
+#include <iostream>
+#include <fstream>
 #include <vector>
 #include <string>
 //#include <bits/stdc++.h>
@@ -10,6 +11,7 @@
 
 class Data {
  public:
+
   Data(const std::string& filename);
 
   unsigned int size() const { return m_data.size(); }
@@ -40,9 +42,34 @@ class Data {
     return chi2/56;
   }
 
-
-
-  Data plus(const Data& A) {
+Data operator+(Data& A){
+    double new_error;
+    double y;
+    std::vector<double> new_data;
+    std::vector<double> new_errors;
+    std::ofstream fout("new_data");
+    for(int i = 0; i < 56; i++){
+      y = (1/pow(A.error(i), 2)*A.measurement(i) + 1/pow(error(i), 2)*measurement(i))/(1/pow(A.error(i), 2) + 1/pow( error(i), 2));
+      new_error = sqrt(1/(1/pow(A.error(i), 2) + 1/pow( error(i), 2)));
+      new_data.push_back(y);
+      new_errors.push_back(new_error);
+  }
+    fout << 56 << std::endl;
+    for(int i = 0; i < 56; i++){
+      fout << m_bins[i] << std::endl;
+    }
+    for(int i = 0; i < 56; i++){
+      fout << new_data[i] << std::endl;
+    }
+    for(int i = 0; i < 56; i++){
+      fout << new_errors[i] << std::endl;
+    }
+    fout.close();
+    Data B("new_data");
+  return  B;
+}
+/*
+  Data plus(Data& A) {
   // Kompatibilität checken:
   if (checkCompatibility(A, 1) == 0){
     return A;
@@ -56,6 +83,7 @@ class Data {
     m_error.push_back(new_error);
   }
   }
+*/
 
  private:
   Data() {}  // disallow empty data set
