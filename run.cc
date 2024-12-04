@@ -103,8 +103,14 @@ int main() {
     cout << datA.measurement(i) << endl;
     cout << datA.error(i) << endl;
   }*/
-
+/*
+for(int i = 0; i < 56; i++){
+  cout << (datA + datB + datC +datD).binCenter(i) << endl;
+  cout << (datA + datB + datC +datD).measurement(i) << endl;
+  cout << (datA + datB + datC +datD).error(i) << endl;
+}
+*/
+cout << (datA + datB + datC +datD).bin(56) << endl;
 cout << (datA + datB + datC +datD).rechi2() << endl;
-
-  return 0;
+return 0;
 }

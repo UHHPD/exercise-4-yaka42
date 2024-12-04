@@ -49,13 +49,13 @@ Data operator+(Data& A){
     std::vector<double> new_errors;
     std::ofstream fout("new_data");
     for(int i = 0; i < 56; i++){
-      y = (1/pow(A.error(i), 2)*A.measurement(i) + 1/pow(error(i), 2)*measurement(i))/(1/pow(A.error(i), 2) + 1/pow( error(i), 2));
-      new_error = sqrt(1/(1/pow(A.error(i), 2) + 1/pow( error(i), 2)));
+      y = ( (1/pow(A.error(i), 2))*A.measurement(i) + (1/pow(error(i), 2))*measurement(i))/((1/pow(A.error(i), 2)) + (1/pow( error(i), 2)));
+      new_error = sqrt(1/((1/pow(A.error(i), 2)) + (1/pow( error(i), 2))));
       new_data.push_back(y);
       new_errors.push_back(new_error);
   }
     fout << 56 << std::endl;
-    for(int i = 0; i < 56; i++){
+    for(int i = 0; i < 57; i++){
       fout << m_bins[i] << std::endl;
     }
     for(int i = 0; i < 56; i++){
