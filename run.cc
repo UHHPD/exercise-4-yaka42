@@ -89,7 +89,17 @@ int main() {
        << endl;
 
   //datA.plus(datB);
+//2a
+int abweichung = 2;
+for(int i = 0; i < 4; i++){
+    cout << "checkCompatibility für Dataset: " << i << " für n: " << abweichung << endl;
+    cout << "A: " << Datensets[i].checkCompatibility(datA, abweichung) << endl;
+    cout << "B: "<< Datensets[i].checkCompatibility(datB, abweichung) << endl;
+    cout << "C: " << Datensets[i].checkCompatibility(datC, abweichung) << endl;
+    cout << "D: " << Datensets[i].checkCompatibility(datD, abweichung) << endl;
+  }
 
+//2b
   //Chi2
   for(int i = 0; i < 4; i++){
     cout << Datensets[i].rechi2() << endl;
@@ -110,7 +120,8 @@ for(int i = 0; i < 56; i++){
   cout << (datA + datB + datC +datD).error(i) << endl;
 }
 */
-cout << (datA + datB + datC +datD).bin(56) << endl;
+//cout << (datA + datB + datC +datD).bin(56) << endl;
+//2c
 cout << (datA + datB + datC +datD).rechi2() << endl;
 return 0;
 }
