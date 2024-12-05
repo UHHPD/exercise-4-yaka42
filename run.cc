@@ -2,7 +2,7 @@
 #include <vector>
 #include <functional>
 #include <string>
-
+#include <cmath>
 #include "Data.hh"
 
 // generic function comparing two values of some type T used later for int and
@@ -60,6 +60,7 @@ void runTests() {
     std::cout << (test() ? " ok" : " FAILED!") << std::endl;
 }
 
+
 int main() {
   using namespace std;
 
@@ -68,12 +69,59 @@ int main() {
   cout << "******************************************************" << endl;
   // create an object which holds data of experiment A
   Data datA("exp_A");
+  Data datB("exp_B");
+  Data datC("exp_C");
+  Data datD("exp_D");
+  std::vector<Data> Datensets = {datA,datB,datC,datD};
 
   // here is the data from experiment A
   cout << "bin 27: from " << datA.binLow(27) << " to " << datA.binHigh(27)
        << endl;
-  cout << "measurement of experiment A in bin 27: " << datA.measurement(27)
+  for(int i = 0; i < 4; i++){
+      cout << "experiment " << i << ", value in bin 27: " << Datensets[i].measurement(27)<< endl;
+  }
+  // exercise 1d)
+  cout << "experiment A - experiment B in bin 27: " << datA.measurement(27) - datB.measurement(27)
+       << endl;
+  cout << "error of experiment A and B: " << sqrt(pow(datA.error(27), 2) +  pow(datB.error(27), 2))
+       << endl;
+  cout << "test of function checkCompatibility: " << datA.checkCompatibility(datB, 1)
        << endl;
 
-  return 0;
+  //datA.plus(datB);
+//2a
+int abweichung = 2;
+for(int i = 0; i < 4; i++){
+    cout << "checkCompatibility für Dataset: " << i << " für n: " << abweichung << endl;
+    cout << "A: " << Datensets[i].checkCompatibility(datA, abweichung) << endl;
+    cout << "B: "<< Datensets[i].checkCompatibility(datB, abweichung) << endl;
+    cout << "C: " << Datensets[i].checkCompatibility(datC, abweichung) << endl;
+    cout << "D: " << Datensets[i].checkCompatibility(datD, abweichung) << endl;
+  }
+
+//2b
+  //Chi2
+  for(int i = 0; i < 4; i++){
+    cout << Datensets[i].rechi2() << endl;
+  }
+
+/*
+  for(int i = 0; i < 56; i++){
+    cout << datA.rechi2()/56 << endl;
+    cout << datA.binCenter(i) << endl;
+    cout << datA.prediction(i) << endl;
+    cout << datA.measurement(i) << endl;
+    cout << datA.error(i) << endl;
+  }*/
+/*
+for(int i = 0; i < 56; i++){
+  cout << (datA + datB + datC +datD).binCenter(i) << endl;
+  cout << (datA + datB + datC +datD).measurement(i) << endl;
+  cout << (datA + datB + datC +datD).error(i) << endl;
+}
+*/
+//cout << (datA + datB + datC +datD).bin(56) << endl;
+//2c
+cout << (datA + datB + datC +datD).rechi2() << endl;
+return 0;
 }

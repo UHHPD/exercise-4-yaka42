@@ -1,5 +1,5 @@
 #include "Data.hh"
-
+#include <cmath>
 #include <iostream>
 #include <fstream>
 #include <cassert>
@@ -7,9 +7,9 @@
 
 using namespace std;
 
+
 Data::Data(const std::string& filename) {
   ifstream file(filename);
-
   // check if file opened correctly
   if (!file.is_open()) {
     throw std::runtime_error("Error could not open file with name: " +
@@ -30,6 +30,12 @@ Data::Data(const std::string& filename) {
     double entries;
     file >> entries;
     m_data.push_back(entries);
+  }
+  // read in data from file: errors
+  for (int i = 0; i < size; ++i) {
+    double errors;
+    file >> errors;
+    m_error.push_back(errors);
   }
 
   // done! close the file
